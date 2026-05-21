@@ -31,6 +31,9 @@ export default function Login() {
             login: email,
             password: password,
           },
+        },
+        {
+          withCredentials: true,
         }
       );
 
@@ -77,14 +80,14 @@ export default function Login() {
           key={db}
           onPress={() => setSelectedDb(db)}
           className={`p-4 rounded-xl mb-2 ${selectedDb === db
-              ? "bg-green-600"
-              : "bg-gray-200"
+            ? "bg-green-600"
+            : "bg-gray-200"
             }`}
         >
           <Text
             className={`font-bold ${selectedDb === db
-                ? "text-white"
-                : "text-black"
+              ? "text-white"
+              : "text-black"
               }`}
           >
             {db}

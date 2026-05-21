@@ -46,7 +46,14 @@ export default function Home() {
 
         <TouchableOpacity
           onPress={() =>
-            router.push("/customers")
+            router.push({
+              pathname: "/customers",
+              params: {
+                url: String(url),
+                db: String(db),
+                uid: String(uid),
+              },
+            })
           }
         >
           <Text className="text-green-600 font-bold">

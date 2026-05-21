@@ -9,41 +9,40 @@ import {
 
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useCustomers } from "@/src/context/CustomerContext";
+import CustomerModal from "@/src/components/CustomerModal";
 
 export default function Customers() {
   const { url, db, uid } = useLocalSearchParams();
+  console.log("custoremrs", url);
 
-  const { customers } = useCustomers();
 
-
+  const { customers, fetchCustomers } = useCustomers();
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
 
     <>
-      <Stack.Screen options={{ title: "Customers" }} />
-      
-      <View className="flex-1 bg-white p-4">
-        <Text className="text-3xl font-bold text-green-600 mb-6">
-          Customers
-        </Text>
+      <Stack.Screen options={{
+        title: "Customers",
+        headerStyle: { backgroundColor: "#16a34a" },
+        headerTintColor: "#fff",
+      }} />
 
-        {/* <TouchableOpacity
-        onPress={() =>
-          router.push({
-            pathname: "/add-customer",
-            params: {
-              url,
-              db,
-              uid,
-            },
-          })
-        }
-        className="bg-green-600 p-4 rounded-xl mb-4"
-      >
-        <Text className="text-center text-white font-bold">
-          Add Customer
-        </Text>
-      </TouchableOpacity> */}
+      <View className="flex-1 bg-white p-4">
+        <View className="flex-row items-center justify-between mb-6">
+          <Text className="text-3xl text-gray-600 font-bold">
+            All Custormers
+          </Text>
+
+          <TouchableOpacity
+            onPress={() => setModalVisible(true)}
+            className="bg-green-600 p-4 rounded-xl"
+          >
+            <Text className="text-white text-center font-bold">
+              + Add Customer
+            </Text>
+          </TouchableOpacity>
+        </View>
 
         <FlatList
           data={customers}
@@ -58,6 +57,13 @@ export default function Customers() {
               <Text>{item.phone || "No Phone"}</Text>
             </View>
           )}
+        />
+
+        <CustomerModal
+          visible={modalVisible}
+          onClose={() => setModalVisible(false)}
+          url={url}
+          refreshCustomers={fetchCustomers}
         />
       </View>
     </>
