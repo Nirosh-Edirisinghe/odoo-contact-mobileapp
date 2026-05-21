@@ -5,7 +5,14 @@ module.exports = {
     "./app/**/*.{js,jsx,ts,tsx}","./src/**/*.{js,jsx,ts,tsx}"],
   presets: [require("nativewind/preset")],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        odoo: {
+          light: "#C084FC",   // main color
+          dark: "#E9D5FF ",      // hover
+        },
+      },
+    },
   },
   plugins: [],
 }

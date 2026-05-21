@@ -1,30 +1,21 @@
 import { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
-
+import {View,Text,FlatList,TouchableOpacity,Alert,Image,} from "react-native";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useCustomers } from "@/src/context/CustomerContext";
 import CustomerModal from "@/src/components/CustomerModal";
 
 export default function Customers() {
+
   const { url, db, uid } = useLocalSearchParams();
   console.log("custoremrs", url);
-
-
   const { customers, fetchCustomers } = useCustomers();
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
-
     <>
       <Stack.Screen options={{
         title: "Customers",
-        headerStyle: { backgroundColor: "#16a34a" },
+        headerStyle: { backgroundColor: "#C084FC" },
         headerTintColor: "#fff",
       }} />
 
@@ -36,7 +27,7 @@ export default function Customers() {
 
           <TouchableOpacity
             onPress={() => setModalVisible(true)}
-            className="bg-green-600 p-4 rounded-xl"
+            className="bg-odoo-light p-4 rounded-xl"
           >
             <Text className="text-white text-center font-bold">
               + Add Customer
@@ -48,17 +39,31 @@ export default function Customers() {
           data={customers}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <View className="bg-gray-100 p-4 rounded-xl mb-3">
-              <Text className="font-bold text-lg">
-                {item.name}
-              </Text>
+            <View className="bg-gray-100 p-4 rounded-xl mb-3 flex-row items-center justify-between">
 
-              <Text>{item.email || "No Email"}</Text>
-              <Text>{item.phone || "No Phone"}</Text>
+              {/* text section */}
+              <View >
+                <Text className="font-bold text-lg">
+                  {item.name}
+                </Text>
+                <Text>{item.email || "No Email"}</Text>
+                <Text>{item.phone || "No Phone"}</Text>
+              </View>
+
+              {/* image section */}
+              {item.image_1920 ? (
+                <Image
+                  source={{
+                    uri: `data:image/png;base64,${item.image_1920}`,
+                  }}
+                  className="w-12 h-12 rounded-full"
+                />
+              ) : (
+                <View className="w-12 h-12 bg-gray-300 rounded-full" />
+              )}
             </View>
           )}
         />
-
         <CustomerModal
           visible={modalVisible}
           onClose={() => setModalVisible(false)}

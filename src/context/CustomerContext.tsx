@@ -34,6 +34,7 @@ export const CustomerProvider = ({
                 "name",
                 "email",
                 "phone",
+                "image_1920"
               ],
               limit: 100,
             },

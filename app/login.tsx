@@ -8,7 +8,7 @@ import {
 } from "react-native";
 
 import axios from "axios";
-import { router, useLocalSearchParams } from "expo-router";
+import { router, Stack, useLocalSearchParams } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Login() {
@@ -68,56 +68,72 @@ export default function Login() {
   };
 
   return (
-    <View className="flex-1 justify-center px-6 bg-white">
-      <Text className="text-3xl font-bold text-center mb-8 text-green-600">
-        Odoo Login
-      </Text>
+    <>
+      <Stack.Screen options={{ title: "" }} />
 
-      <Text className="mb-2 font-bold">Database</Text>
+      <View className="flex-1 justify-center px-6 bg-white">
+        <Text className="text-4xl font-bold text-center mb-8 text-odoo-light">
+          Odoo Login
+        </Text>
 
-      {dbList.map((db: string) => (
-        <TouchableOpacity
-          key={db}
-          onPress={() => setSelectedDb(db)}
-          className={`p-4 rounded-xl mb-2 ${selectedDb === db
-            ? "bg-green-600"
-            : "bg-gray-200"
-            }`}
-        >
-          <Text
-            className={`font-bold ${selectedDb === db
-              ? "text-white"
-              : "text-black"
+        <Text className="mb-2 font-bold text-gray-600">DATABASE</Text>
+
+        {dbList.map((db: string) => (
+          <TouchableOpacity
+            key={db}
+            onPress={() => setSelectedDb(db)}
+            className={`p-4 rounded-xl mb-2 ${selectedDb === db
+              ? "bg-odoo-light"
+              : "bg-gray-200"
               }`}
           >
-            {db}
+            <Text
+              className={`font-bold ${selectedDb === db
+                ? "text-white"
+                : "text-black"
+                }`}
+            >
+              {db}
+            </Text>
+          </TouchableOpacity>
+        ))}
+
+        <View className="my-6">
+          <Text className="text-gray-500 mb-2 text-sm font-semibold">
+            USERNAME
+          </Text>
+
+          <TextInput
+            placeholder="Username"
+            value={email}
+            onChangeText={setEmail}
+            className="border border-gray-300 p-4 rounded-xl "
+          />
+        </View>
+
+        <View className="mb-8">
+          <Text className="text-gray-500 mb-2 text-sm font-semibold">
+            PASSWORD
+          </Text>
+
+          <TextInput
+            placeholder="Password"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+            className="border border-gray-300 p-4 rounded-xl"
+          />
+        </View>
+
+        <TouchableOpacity
+          onPress={handleLogin}
+          className="bg-odoo-light p-4 rounded-xl"
+        >
+          <Text className="text-center text-white font-bold text-lg">
+            Login
           </Text>
         </TouchableOpacity>
-      ))}
-
-      <TextInput
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        className="border border-gray-300 p-4 rounded-xl mb-4 mt-4"
-      />
-
-      <TextInput
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        className="border border-gray-300 p-4 rounded-xl mb-6"
-      />
-
-      <TouchableOpacity
-        onPress={handleLogin}
-        className="bg-green-600 p-4 rounded-xl"
-      >
-        <Text className="text-center text-white font-bold text-lg">
-          Login
-        </Text>
-      </TouchableOpacity>
-    </View>
+      </View>
+    </>
   );
 }

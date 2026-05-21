@@ -1,17 +1,11 @@
 import { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
-
+import { View, Text, TextInput, TouchableOpacity, Alert, } from "react-native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { router } from "expo-router";
+import { router, Stack } from "expo-router";
 
 export default function Index() {
+
   const [url, setUrl] = useState("http://10.215.149.113:8069");
 
   const connectToOdoo = async () => {
@@ -23,9 +17,7 @@ export default function Index() {
           params: {},
         }
       );
-
       const databases = response.data.result;
-
       router.push({
         pathname: "/login",
         params: {
@@ -40,43 +32,59 @@ export default function Index() {
   };
 
   useEffect(() => {
-  const checkUser = async () => {
-    const user = await AsyncStorage.getItem("user");
+    const checkUser = async () => {
+      const user = await AsyncStorage.getItem("user");
 
-    if (user) {
-      const parsed = JSON.parse(user);
-
-      router.replace({
-        pathname: "/home",
-        params: parsed,
-      });
-    }
-  };
-
-  checkUser();
-}, []);
+      if (user) {
+        const parsed = JSON.parse(user);
+        router.replace({
+          pathname: "/home",
+          params: parsed,
+        });
+      }
+    };
+    checkUser();
+  }, []);
 
   return (
-    <View className="flex-1 justify-center px-6 bg-white">
-      <Text className="text-3xl font-bold text-center mb-8 text-green-600">
-        Connect Odoo
-      </Text>
+    <>
+      {/* Hide default header */}
+      <Stack.Screen options={{ headerShown: false }} />
 
-      <TextInput
-        placeholder="Enter Odoo URL"
-        value={url}
-        onChangeText={setUrl}
-        className="border border-gray-300 p-4 rounded-xl mb-6"
-      />
+      <View className="flex-1 justify-center px-6 bg-white ">
+        <Text className="text-center mb-8">
+          <Text className="text-3xl font-semibold text-gray-500 ">
+            Welcome{"\n"}
+          </Text>
 
-      <TouchableOpacity
-        onPress={connectToOdoo}
-        className="bg-green-600 p-4 rounded-xl"
-      >
-        <Text className="text-center text-white font-bold text-lg">
-          Connect
+          <Text className="text-5xl font-bold text-odoo-light">
+            Odoo Contacts
+          </Text>
         </Text>
-      </TouchableOpacity>
-    </View>
+
+        <View className="mb-10">
+          <Text className="text-gray-500 mb-2 text-sm font-semibold">
+            SERVER ADDRESS
+          </Text>
+
+          <TextInput
+            placeholder="Enter Odoo URL"
+            value={url}
+            onChangeText={setUrl}
+            className="border border-gray-300 p-4 rounded-xl "
+          />
+        </View>
+
+
+        <TouchableOpacity
+          onPress={connectToOdoo}
+          className="bg-odoo-light p-4 rounded-xl"
+        >
+          <Text className="text-center text-white font-bold text-lg">
+            Connect
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </>
   );
 }

@@ -1,41 +1,19 @@
-import {
-  Modal,
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
-  Alert,
-} from "react-native";
-
+import { Modal, View, Text, TextInput, TouchableOpacity, ScrollView, Alert, } from "react-native";
 import { useState } from "react";
 import axios from "axios";
 import { Ionicons } from "@expo/vector-icons";
 
-export default function CustomerModal({
-  visible,
-  onClose,
-  url,
-  refreshCustomers,
-}: any) {
+export default function CustomerModal({ visible, onClose, url, refreshCustomers, }: any) {
 
-  const [companyType, setCompanyType] =
-    useState("person");
-
+  const [companyType, setCompanyType] = useState("person");
   const [name, setName] = useState("");
-  const [parentCompany, setParentCompany] =
-    useState("");
-
+  const [parentCompany, setParentCompany] = useState("");
   const [street, setStreet] = useState("");
   const [street2, setStreet2] = useState("");
   const [city, setCity] = useState("");
   const [zip, setZip] = useState("");
-
   const [vat, setVat] = useState("");
-
-  const [jobPosition, setJobPosition] =
-    useState("");
-
+  const [jobPosition, setJobPosition] = useState("");
   const [phone, setPhone] = useState("");
   const [mobile, setMobile] = useState("");
   const [email, setEmail] = useState("");
@@ -59,7 +37,6 @@ export default function CustomerModal({
       if (companyType === "person") {
         payload.function = jobPosition;
       }
-
       console.log(payload);
       console.log(url);
       await axios.post(
@@ -103,12 +80,12 @@ export default function CustomerModal({
       {/* Background overlay */}
       <View className="flex-1 bg-black/50 justify-center items-center">
         {/* Modal Box */}
-        <View className="bg-white w-[90%] max-h-[85%] rounded-2xl p-5">
+        <View className="bg-white w-[90%] max-h-[85%] rounded-2xl py-5 px-4">
 
           <ScrollView showsVerticalScrollIndicator={false}>
 
             <View className="flex-row items-center justify-between mb-6">
-              <Text className="text-3xl font-bold">
+              <Text className="text-3xl font-bold text-gray-700">
                 Add Customer
               </Text>
 
@@ -122,7 +99,7 @@ export default function CustomerModal({
               <TouchableOpacity
                 onPress={() => setCompanyType("person")}
                 className={`flex-1 p-4 rounded-xl mr-2 ${companyType === "person"
-                  ? "bg-green-600"
+                  ? "bg-odoo-light"
                   : "bg-gray-200"
                   }`}
               >
@@ -134,7 +111,7 @@ export default function CustomerModal({
               <TouchableOpacity
                 onPress={() => setCompanyType("company")}
                 className={`flex-1 p-4 rounded-xl ${companyType === "company"
-                  ? "bg-green-600"
+                  ? "bg-odoo-light"
                   : "bg-gray-200"
                   }`}
               >
@@ -235,7 +212,7 @@ export default function CustomerModal({
 
             <TouchableOpacity
               onPress={createCustomer}
-              className="bg-green-600 p-4 rounded-xl mb-4"
+              className="bg-odoo-light p-4 rounded-xl mb-4"
             >
               <Text className="text-white text-center font-bold">
                 Create Customer
