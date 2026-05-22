@@ -50,8 +50,8 @@ export default function Login() {
         );
         Alert.alert("Success", "Login successful");
 
-        router.push({
-          pathname: "/home",
+        router.replace({
+          pathname: "/(drawer)/home",
           params: {
             url,
             db: selectedDb,
@@ -89,7 +89,7 @@ export default function Login() {
           >
             <Text
               className={`font-bold ${selectedDb === db
-                ? "text-white"
+                ? "text-black"
                 : "text-black"
                 }`}
             >

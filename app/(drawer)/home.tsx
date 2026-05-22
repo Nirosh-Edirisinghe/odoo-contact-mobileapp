@@ -2,7 +2,6 @@ import { View, Text, TouchableOpacity, FlatList, Image, } from "react-native";
 import { useLocalSearchParams, router, Stack } from "expo-router";
 import { useCustomers } from "@/src/context/CustomerContext";
 import { useEffect } from "react";
-import LogoutButton from "@/src/components/LogoutButton";
 import HomeTopBar from "@/src/components/HomeTopBar";
 
 export default function Home() {
@@ -27,7 +26,6 @@ export default function Home() {
           <Text className="text-3xl font-bold text-gray-700">
             Dashboard
           </Text>
-          <LogoutButton />
         </View>
 
         <View className="bg-odoo-light p-6 rounded-2xl mb-6">
