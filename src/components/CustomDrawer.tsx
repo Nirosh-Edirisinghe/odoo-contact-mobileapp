@@ -1,31 +1,16 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-} from "react-native";
-
+import { View, Text, TouchableOpacity, } from "react-native";
 import {
   DrawerContentScrollView,
   DrawerItemList,
 } from "@react-navigation/drawer";
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
 import { router } from "expo-router";
-
 import { Ionicons } from "@expo/vector-icons";
+import { useAuth } from "../context/AuthContext";
 
 export default function CustomDrawer(props: any) {
 
-  const logout = async () => {
-    try {
-      await AsyncStorage.removeItem("user");
-
-      router.replace("/");
-    } catch (error) {
-      console.log("Logout error:", error);
-    }
-  };
+  const { logout } = useAuth()
 
   return (
     <View className="flex-1 bg-odoo-light">

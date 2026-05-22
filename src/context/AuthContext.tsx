@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState, } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { router } from "expo-router";
 
 const AuthContext = createContext<any>(null);
 
@@ -48,6 +49,7 @@ export const AuthProvider = ({ children }: any) => {
     await AsyncStorage.removeItem(
       "user"
     );
+    router.replace("/");
   };
 
   const value = { user, loading, login, logout, }
