@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
-import {View,Text,FlatList,TouchableOpacity,Alert,Image,} from "react-native";
+import { View, Text, FlatList, TouchableOpacity, Alert, Image, } from "react-native";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useCustomers } from "@/src/context/CustomerContext";
 import CustomerModal from "@/src/components/CustomerModal";
+import { useAuth } from "@/src/context/AuthContext";
 
 export default function Customers() {
 
-  const { url, db, uid } = useLocalSearchParams();
-  console.log("custoremrs", url);
+  const { user } = useAuth();
   const { customers, fetchCustomers } = useCustomers();
   const [modalVisible, setModalVisible] = useState(false);
-
+  const url = user?.url;
+  
   return (
     <>
       <Stack.Screen options={{

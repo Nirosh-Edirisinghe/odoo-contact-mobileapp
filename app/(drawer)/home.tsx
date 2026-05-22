@@ -3,11 +3,14 @@ import { useLocalSearchParams, router, Stack } from "expo-router";
 import { useCustomers } from "@/src/context/CustomerContext";
 import { useEffect } from "react";
 import HomeTopBar from "@/src/components/HomeTopBar";
+import { useAuth } from "@/src/context/AuthContext";
 
 export default function Home() {
-  const { url, db, uid } = useLocalSearchParams();
+  
   const { customers, fetchCustomers } = useCustomers();
-
+  const { user } = useAuth();
+  const url = user?.url;
+  
   useEffect(() => {
     fetchCustomers(String(url));
   }, []);
@@ -45,14 +48,7 @@ export default function Home() {
 
           <TouchableOpacity
             onPress={() =>
-              router.push({
-                pathname: "/customers",
-                params: {
-                  url: String(url),
-                  db: String(db),
-                  uid: String(uid),
-                },
-              })
+              router.push("/customers")
             }
           >
             <Text className="text-blue-500 font-bold">
