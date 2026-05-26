@@ -15,7 +15,6 @@ export const AuthProvider = ({ children }: any) => {
     const loadUser = async () => {
       try {
         const storedUser = await AsyncStorage.getItem("user");
-
         if (storedUser) {
           setUser(JSON.parse(storedUser));
         }
@@ -44,15 +43,14 @@ export const AuthProvider = ({ children }: any) => {
 
   // Logout
   const logout = async () => {
-    setUser(null);
-    
+    setUser(null);    
     await AsyncStorage.removeItem(
       "user"
     );
     router.replace("/");
   };
 
-  const value = { user, loading, login, logout, }
+  const value = { user, loading, login, logout, } 
 
   return (
     <AuthContext.Provider

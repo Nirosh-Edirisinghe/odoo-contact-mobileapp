@@ -6,6 +6,7 @@ import {
 } from "react";
 
 import axios from "axios";
+import { useAuth } from "./AuthContext";
 
 const CustomerContext = createContext<any>(null);
 
@@ -44,7 +45,7 @@ export const CustomerProvider = ({
 
       setCustomers(response.data.result);
     } catch (error) {
-      console.log(error);
+      console.log("Error fetching custormers",error);
     } finally {
       setLoading(false);
     }
@@ -52,8 +53,8 @@ export const CustomerProvider = ({
 
   const value = {
     customers,
-        loading,
-        fetchCustomers,
+    loading,
+    fetchCustomers,
   }
 
   return (

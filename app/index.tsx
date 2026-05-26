@@ -7,7 +7,7 @@ import { useAuth } from "@/src/context/AuthContext";
 
 export default function Index() {
 
-  const [url, setUrl] = useState("http://10.215.149.113:8069");
+  const [url, setUrl] = useState("http://10.247.196.113:8069");
   const { user, loading } = useAuth();
 
   const connectToOdoo = async () => {
@@ -28,7 +28,7 @@ export default function Index() {
         },
       });
     } catch (error) {
-      console.log(error);
+      console.log('Cannot connect to Odoo server',error);
       Alert.alert("Error", "Cannot connect to Odoo server");
     }
   };
