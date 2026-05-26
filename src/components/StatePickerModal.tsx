@@ -1,0 +1,109 @@
+import { Modal, View, Text, TextInput, TouchableOpacity, FlatList } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { useState } from "react";
+
+type State = { id: number; name: string; country_id: [number, string]; };
+
+type Props = {
+  visible: boolean;
+  states: State[];
+  selectedState: State | null;
+  onSelect: (state: State) => void;
+  onClose: () => void;
+};
+
+const StatePickerModal = ({
+  visible,
+  states,
+  selectedState,
+  onSelect,
+  onClose,
+}: Props) => {
+
+  const [search, setSearch] = useState("");
+
+  const filtered = states.filter((s) =>
+    s.name.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const handleClose = () => {
+    setSearch("");
+    onClose();
+  };
+
+  const handleSelect = (state: State) => {
+    setSearch("");
+    onSelect(state);
+  };
+
+  return (
+   <Modal
+      visible={visible}
+      animationType="slide"
+      transparent
+      onRequestClose={handleClose}
+    >
+      <View className="flex-1 bg-black/50 justify-end">
+        <View className="bg-white rounded-t-3xl pt-5 px-5 h-[70%]">
+
+          {/* Header */}
+          <View className="flex-row justify-between items-center mb-3.5">
+            <Text className="text-lg font-bold text-gray-900">State</Text>
+            <TouchableOpacity onPress={handleClose} hitSlop={12}>
+              <Ionicons name="close" size={24} color="#374151" />
+            </TouchableOpacity>
+          </View>
+
+          {/* Search */}
+          <View className="flex-row items-center bg-gray-100 rounded-xl px-3 mb-3">
+            <Ionicons name="search-outline" size={16} color="#9CA3AF" />
+            <TextInput
+              placeholder="Search state…"
+              value={search}
+              onChangeText={setSearch}
+              className="flex-1 py-2.5 px-2 text-sm text-gray-900"
+              placeholderTextColor="#9CA3AF"
+              autoFocus
+            />
+            {search.length > 0 && (
+              <TouchableOpacity onPress={() => setSearch("")}>
+                <Ionicons name="close-circle" size={16} color="#9CA3AF" />
+              </TouchableOpacity>
+            )}
+          </View>
+
+          {/* List */}
+          <FlatList
+            data={filtered}
+            keyExtractor={(item) => String(item.id)}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
+            renderItem={({ item }) => {
+              const isSelected = selectedState?.id === item.id;
+              return (
+                <TouchableOpacity
+                  onPress={() => handleSelect(item)}
+                  className={`flex-row items-center justify-between py-3.5 px-1 border-b border-gray-100 ${
+                    isSelected ? "bg-purple-50" : "bg-white"
+                  }`}
+                >
+                  <Text
+                    className={`text-base ${
+                      isSelected ? "text-odoo font-semibold" : "text-gray-700 font-normal"
+                    }`}
+                  >
+                    {item.name}
+                  </Text>
+                  {isSelected && <Ionicons name="checkmark" size={18} color="#875A7B" />}
+                </TouchableOpacity>
+              );
+            }}
+          />
+
+        </View>
+      </View>
+    </Modal>
+  )
+}
+
+export default StatePickerModal
