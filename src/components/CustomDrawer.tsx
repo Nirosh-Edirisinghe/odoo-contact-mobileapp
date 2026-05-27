@@ -23,8 +23,8 @@ export default function CustomDrawer(props: any) {
           }}
         >
 
-          <View className="px-4 mb-6">
-            <Text className="text-4xl font-bold text-white">
+          <View className="px-4 mb-6 ">
+            <Text className="text-4xl font-bold text-white ">
               Odoo App
             </Text>
           </View>
@@ -39,11 +39,11 @@ export default function CustomDrawer(props: any) {
 
           <TouchableOpacity
             onPress={logout}
-            className="flex-row items-center bg-purple-900 p-4 rounded-xl"
+            className="flex-row items-center bg-purple-800 px-6 py-3 rounded-xl"
           >
             <Ionicons
               name="log-out-outline"
-              size={22}
+              size={24}
               color="white"
             />
 
