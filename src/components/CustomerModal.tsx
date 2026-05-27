@@ -50,24 +50,24 @@ export default function CustomerModal({ visible, onClose, url, refreshCustomers 
   const [tagPickerVisible, setTagPickerVisible] = useState(false);
 
   const clearForm = () => {
-  setName("");
-  setStreet("");
-  setStreet2("");
-  setCity("");
-  setVat("");
-  setZip("");
-  setJobPosition("");
-  setMobile("");
-  setEmail("");
-  setPhone("");
-  setWebSite("");
-  setSelectedCountry(null);
-  setSelectedState(null);
-  setSelectedCompany(null);
-  setSelectedTags([]);
-  setSelectedTitle(null);
-  
-};
+    setName("");
+    setStreet("");
+    setStreet2("");
+    setCity("");
+    setVat("");
+    setZip("");
+    setJobPosition("");
+    setMobile("");
+    setEmail("");
+    setPhone("");
+    setWebSite("");
+    setSelectedCountry(null);
+    setSelectedState(null);
+    setSelectedCompany(null);
+    setSelectedTags([]);
+    setSelectedTitle(null);
+
+  };
 
   const fetchCountries = async () => {
     try {
@@ -361,7 +361,7 @@ export default function CustomerModal({ visible, onClose, url, refreshCustomers 
                       color={companyType === type ? "#fff" : "#6B7280"}
                       style={{ marginRight: 6 }}
                     />
-                    <Text className={`font-semibold text-sm ${companyType === type ? "text-white" : "text-gray-500"}`}>
+                    <Text className={`font-semibold text-md ${companyType === type ? "text-white" : "text-gray-500"}`}>
                       {type === "person" ? "Individual" : "Company"}
                     </Text>
                   </TouchableOpacity>
@@ -369,21 +369,21 @@ export default function CustomerModal({ visible, onClose, url, refreshCustomers 
               </View>
 
               {/* Name */}
-              <Text className="text-sm font-semibold text-gray-700 mb-1.5">
+              <Text className="text-md font-semibold text-gray-600 mb-1.5">
                 {companyType === "company" ? "Company Name" : "Name"}
                 <Text className="text-red-500"> *</Text>
               </Text>
-              <TextInput placeholder={companyType === "person" ? "e.g. Brandon Freeman" : "e.g. Lumber Inc"} value={name} onChangeText={setName} className="border-[1.5px] border-gray-200 rounded-xl px-3.5 py-3 text-sm text-gray-900 bg-gray-50 mb-3.5" placeholderTextColor="#9CA3AF" />
+              <TextInput placeholder={companyType === "person" ? "e.g. Brandon Freeman" : "e.g. Lumber Inc"} value={name} onChangeText={setName} className="border-[1.5px] border-gray-200 rounded-xl px-3.5 py-3 text-md text-gray-900 bg-gray-50 mb-3.5" placeholderTextColor="#9CA3AF" />
 
               {/* Parent Company */}
               {companyType === "person" && (
                 <>
-                  <Text className="text-sm font-semibold text-gray-700 mb-1.5">Company</Text>
+                  <Text className="text-md font-semibold text-gray-600 mb-1.5">Company</Text>
                   <TouchableOpacity
                     onPress={() => setComanyPickerVisible(true)}
                     className="flex-row items-center border-[1.5px] border-gray-200 rounded-xl px-3.5 py-3.5 bg-gray-50 mb-3.5"
                   >
-                    <Text className={`flex-1 text-sm ${selectedCompany ? "text-gray-900" : "text-gray-400"}`}>
+                    <Text className={`flex-1 text-md ${selectedCompany ? "text-gray-900" : "text-gray-400"}`}>
                       {selectedCompany ? selectedCompany.name : "Select Company"}
                     </Text>
                     <Ionicons name="chevron-down" size={16} color="#9CA3AF" />
@@ -392,86 +392,86 @@ export default function CustomerModal({ visible, onClose, url, refreshCustomers 
               )}
 
               {/* Street */}
-              <Text className="text-sm font-semibold text-gray-700 mb-1.5">Street</Text>
-              <TextInput placeholder="Street…" value={street} onChangeText={setStreet} className="border-[1.5px] border-gray-200 rounded-xl px-3.5 py-3 text-sm text-gray-900 bg-gray-50 mb-3.5" placeholderTextColor="#9CA3AF" />
+              <Text className="text-md font-semibold text-gray-600 mb-1.5">Street</Text>
+              <TextInput placeholder="Street…" value={street} onChangeText={setStreet} className="border-[1.5px] border-gray-200 rounded-xl px-3.5 py-3 text-md text-gray-900 bg-gray-50 mb-3.5" placeholderTextColor="#9CA3AF" />
 
               {/* Street 2 */}
-              <Text className="text-sm font-semibold text-gray-700 mb-1.5">Street 2</Text>
-              <TextInput placeholder="Street2…" value={street2} onChangeText={setStreet2} className="border-[1.5px] border-gray-200 rounded-xl px-3.5 py-3 text-sm text-gray-900 bg-gray-50 mb-3.5" placeholderTextColor="#9CA3AF" />
+              <Text className="text-md font-semibold text-gray-600 mb-1.5">Street 2</Text>
+              <TextInput placeholder="Street2…" value={street2} onChangeText={setStreet2} className="border-[1.5px] border-gray-200 rounded-xl px-3.5 py-3 text-md text-gray-900 bg-gray-50 mb-3.5" placeholderTextColor="#9CA3AF" />
 
               {/* City + ZIP */}
               <View className="flex-row gap-2">
                 <View className="flex-1">
-                  <Text className="text-sm font-semibold text-gray-700 mb-1.5">City</Text>
-                  <TextInput placeholder="City" value={city} onChangeText={setCity} className="border-[1.5px] border-gray-200 rounded-xl px-3.5 py-3 text-sm text-gray-900 bg-gray-50 mb-3.5" placeholderTextColor="#9CA3AF" />
+                  <Text className="text-md font-semibold text-gray-600 mb-1.5">City</Text>
+                  <TextInput placeholder="City" value={city} onChangeText={setCity} className="border-[1.5px] border-gray-200 rounded-xl px-3.5 py-3 text-md text-gray-900 bg-gray-50 mb-3.5" placeholderTextColor="#9CA3AF" />
                 </View>
                 <View className="flex-1">
-                  <Text className="text-sm font-semibold text-gray-700 mb-1.5">ZIP</Text>
-                  <TextInput placeholder="00000" value={zip} onChangeText={setZip} className="border-[1.5px] border-gray-200 rounded-xl px-3.5 py-3 text-sm text-gray-900 bg-gray-50 mb-3.5" placeholderTextColor="#9CA3AF" keyboardType="numeric" />
+                  <Text className="text-md font-semibold text-gray-600 mb-1.5">ZIP</Text>
+                  <TextInput placeholder="00000" value={zip} onChangeText={setZip} className="border-[1.5px] border-gray-200 rounded-xl px-3.5 py-3 text-md text-gray-900 bg-gray-50 mb-3.5" placeholderTextColor="#9CA3AF" keyboardType="numeric" />
                 </View>
               </View>
 
               {/* State */}
-              <Text className="text-sm font-semibold text-gray-700 mb-1.5">State</Text>
+              <Text className="text-md font-semibold text-gray-600 mb-1.5">State</Text>
               <TouchableOpacity
                 onPress={() => setStatePickerVisible(true)}
                 className="flex-row items-center border-[1.5px] border-gray-200 rounded-xl px-3.5 py-3.5 bg-gray-50 mb-3.5"
               >
-                <Text className={`flex-1 text-sm ${selectedState ? "text-gray-900" : "text-gray-400"}`}>
+                <Text className={`flex-1 text-md ${selectedState ? "text-gray-900" : "text-gray-400"}`}>
                   {selectedState ? selectedState.name : "Select State"}
                 </Text>
                 <Ionicons name="chevron-down" size={16} color="#9CA3AF" />
               </TouchableOpacity>
 
               {/* Country — uses CountryPickerModal */}
-              <Text className="text-sm font-semibold text-gray-700 mb-1.5">Country</Text>
+              <Text className="text-md font-semibold text-gray-600 mb-1.5">Country</Text>
               <TouchableOpacity
                 onPress={() => setCountryPickerVisible(true)}
                 className="flex-row items-center border-[1.5px] border-gray-200 rounded-xl px-3.5 py-3.5 bg-gray-50 mb-3.5"
               >
-                <Text className={`flex-1 text-sm ${selectedCountry ? "text-gray-900" : "text-gray-400"}`}>
+                <Text className={`flex-1 text-md ${selectedCountry ? "text-gray-900" : "text-gray-400"}`}>
                   {selectedCountry ? selectedCountry.name : "Select Country"}
                 </Text>
                 <Ionicons name="chevron-down" size={16} color="#9CA3AF" />
               </TouchableOpacity>
 
               {/* Tax ID */}
-              <Text className="text-sm font-semibold text-gray-700 mb-1.5">Tax ID</Text>
-              <TextInput placeholder="/ if not aplicable" value={vat} onChangeText={setVat} className="border-[1.5px] border-gray-200 rounded-xl px-3.5 py-3 text-sm text-gray-900 bg-gray-50 mb-3.5" placeholderTextColor="#9CA3AF" />
+              <Text className="text-md font-semibold text-gray-600 mb-1.5">Tax ID</Text>
+              <TextInput placeholder="/ if not aplicable" value={vat} onChangeText={setVat} className="border-[1.5px] border-gray-200 rounded-xl px-3.5 py-3 text-md text-gray-900 bg-gray-50 mb-3.5" placeholderTextColor="#9CA3AF" />
 
               {/* Job Position */}
               {companyType === "person" && (
                 <>
-                  <Text className="text-sm font-semibold text-gray-700 mb-1.5">Job Position</Text>
-                  <TextInput placeholder="e.g. Sales Manager" value={jobPosition} onChangeText={setJobPosition} className="border-[1.5px] border-gray-200 rounded-xl px-3.5 py-3 text-sm text-gray-900 bg-gray-50 mb-3.5" placeholderTextColor="#9CA3AF" />
+                  <Text className="text-md font-semibold text-gray-600 mb-1.5">Job Position</Text>
+                  <TextInput placeholder="e.g. Sales Manager" value={jobPosition} onChangeText={setJobPosition} className="border-[1.5px] border-gray-200 rounded-xl px-3.5 py-3 text-md text-gray-900 bg-gray-50 mb-3.5" placeholderTextColor="#9CA3AF" />
                 </>
               )}
 
               {/* Phone */}
-              <Text className="text-sm font-semibold text-gray-700 mb-1.5">Phone</Text>
-              <TextInput placeholder="+1 555 000 0000" value={phone} onChangeText={setPhone} className="border-[1.5px] border-gray-200 rounded-xl px-3.5 py-3 text-sm text-gray-900 bg-gray-50 mb-3.5" placeholderTextColor="#9CA3AF" keyboardType="phone-pad" />
+              <Text className="text-md font-semibold text-gray-600 mb-1.5">Phone</Text>
+              <TextInput placeholder="+1 555 000 0000" value={phone} onChangeText={setPhone} className="border-[1.5px] border-gray-200 rounded-xl px-3.5 py-3 text-md text-gray-900 bg-gray-50 mb-3.5" placeholderTextColor="#9CA3AF" keyboardType="phone-pad" />
 
               {/* Mobile */}
-              <Text className="text-sm font-semibold text-gray-700 mb-1.5">Mobile</Text>
-              <TextInput placeholder="+1 555 000 0001" value={mobile} onChangeText={setMobile} className="border-[1.5px] border-gray-200 rounded-xl px-3.5 py-3 text-sm text-gray-900 bg-gray-50 mb-3.5" placeholderTextColor="#9CA3AF" keyboardType="phone-pad" />
+              <Text className="text-md font-semibold text-gray-600 mb-1.5">Mobile</Text>
+              <TextInput placeholder="+1 555 000 0001" value={mobile} onChangeText={setMobile} className="border-[1.5px] border-gray-200 rounded-xl px-3.5 py-3 text-md text-gray-900 bg-gray-50 mb-3.5" placeholderTextColor="#9CA3AF" keyboardType="phone-pad" />
 
               {/* Email */}
-              <Text className="text-sm font-semibold text-gray-700 mb-1.5">Email</Text>
-              <TextInput placeholder="hello@example.com" value={email} onChangeText={setEmail} className="border-[1.5px] border-gray-200 rounded-xl px-3.5 py-3 text-sm text-gray-900 bg-gray-50 mb-3.5" placeholderTextColor="#9CA3AF" keyboardType="email-address" autoCapitalize="none" />
+              <Text className="text-md font-semibold text-gray-600 mb-1.5">Email</Text>
+              <TextInput placeholder="hello@example.com" value={email} onChangeText={setEmail} className="border-[1.5px] border-gray-200 rounded-xl px-3.5 py-3 text-md text-gray-900 bg-gray-50 mb-3.5" placeholderTextColor="#9CA3AF" keyboardType="email-address" autoCapitalize="none" />
 
               {/* website */}
-              <Text className="text-sm font-semibold text-gray-700 mb-1.5">Website</Text>
-              <TextInput placeholder="e.g. https://www.odoo.com" value={website} onChangeText={setWebSite} className="border-[1.5px] border-gray-200 rounded-xl px-3.5 py-3 text-sm text-gray-900 bg-gray-50 mb-3.5" placeholderTextColor="#9CA3AF" keyboardType="email-address" />
+              <Text className="text-md font-semibold text-gray-600 mb-1.5">Website</Text>
+              <TextInput placeholder="e.g. https://www.odoo.com" value={website} onChangeText={setWebSite} className="border-[1.5px] border-gray-200 rounded-xl px-3.5 py-3 text-md text-gray-900 bg-gray-50 mb-3.5" placeholderTextColor="#9CA3AF" keyboardType="email-address" />
 
               {/* Title */}
               {companyType === "person" && (
                 <>
-                  <Text className="text-sm font-semibold text-gray-700 mb-1.5">Title</Text>
+                  <Text className="text-md font-semibold text-gray-600 mb-1.5">Title</Text>
                   <TouchableOpacity
                     onPress={() => setTitlePickerVisible(true)}
                     className="flex-row items-center border-[1.5px] border-gray-200 rounded-xl px-3.5 py-3.5 bg-gray-50 mb-3.5"
                   >
-                    <Text className={`flex-1 text-sm ${selectedTitle ? "text-gray-900" : "text-gray-400"}`}>
+                    <Text className={`flex-1 text-md ${selectedTitle ? "text-gray-900" : "text-gray-400"}`}>
                       {selectedTitle ? selectedTitle.name : "e.g. Mister"}
                     </Text>
                     <Ionicons name="chevron-down" size={16} color="#9CA3AF" />
@@ -480,12 +480,12 @@ export default function CustomerModal({ visible, onClose, url, refreshCustomers 
               )}
 
               {/* Tags */}
-              <Text className="text-sm font-semibold text-gray-700 mb-1.5">Tags</Text>
+              <Text className="text-md font-semibold text-gray-600 mb-1.5">Tags</Text>
               <TouchableOpacity
                 onPress={() => setTagPickerVisible(true)}
                 className="flex-row items-center border-[1.5px] border-gray-200 rounded-xl px-3.5 py-3.5 bg-gray-50 mb-3.5"
               >
-                <Text className={`flex-1 text-sm ${selectedTags.length > 0 ? "text-gray-900" : "text-gray-400"}`}>
+                <Text className={`flex-1 text-md ${selectedTags.length > 0 ? "text-gray-900" : "text-gray-400"}`}>
                   {selectedTags.length > 0
                     ? selectedTags.map(t => t.name).join(", ")
                     : "e.g. 'B2B','VIP','Consulting'"}
@@ -500,7 +500,12 @@ export default function CustomerModal({ visible, onClose, url, refreshCustomers 
               </TouchableOpacity>
 
               {/* Cancel button */}
-              <TouchableOpacity onPress={onClose} className="items-center bg-gray-100 rounded-2xl py-3.5">
+              <TouchableOpacity
+                onPress={() => {
+                  onClose(),
+                  clearForm()
+                }}
+                className="items-center bg-gray-100 rounded-2xl py-3.5">
                 <Text className="text-gray-500 font-semibold text-base">Cancel</Text>
               </TouchableOpacity>
 

@@ -60,7 +60,7 @@ const ComanyPickerModal = ({
               placeholder="Search country…"
               value={search}
               onChangeText={setSearch}
-              className="flex-1 py-2.5 px-2 text-sm text-gray-900"
+              className="flex-1 py-2.5 px-2 text-md text-gray-900"
               placeholderTextColor="#9CA3AF"
               autoFocus
             />
