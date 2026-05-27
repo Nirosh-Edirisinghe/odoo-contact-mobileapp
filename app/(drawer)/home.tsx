@@ -10,6 +10,7 @@ export default function Home() {
   const { customers, fetchCustomers } = useCustomers();
   const { user } = useAuth();
   const url = user?.url;
+  
 
   useEffect(() => {
     fetchCustomers(String(url));

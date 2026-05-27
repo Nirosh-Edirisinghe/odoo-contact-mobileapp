@@ -47,7 +47,7 @@ export const CustomerProvider = ({
 
       setCustomers(response.data.result);
     } catch (error) {
-      console.log("Error fetching custormers", error);
+      console.log("Error fetching custormers ini", error);
     } finally {
       setLoading(false);
     }
