@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text, Image, ActivityIndicator, TouchableOpacity } from "react-native";
+import { View, Text, Image, ActivityIndicator, TouchableOpacity, Alert } from "react-native";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import axios from "axios";
 import { useAuth } from "@/src/context/AuthContext";
@@ -10,7 +10,7 @@ export default function CustomerDetails() {
   const { id } = useLocalSearchParams();
   const { user } = useAuth();
   const url = user?.url;
-  const { tags, fetchTags } = useCustomers();
+  const { tags, fetchTags, fetchCustomers } = useCustomers();
 
   const [customer, setCustomer] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -80,6 +80,53 @@ export default function CustomerDetails() {
     } finally {
       setLoading(false);
     }
+  };
+
+  // delete api call
+  const deleteCustomer = async () => {
+    if (!url || !id) return;
+
+    try {
+      await axios.post(
+        `${url}/web/dataset/call_kw/res.partner/unlink`,
+        {
+          jsonrpc: "2.0",
+          method: "call",
+          params: {
+            model: "res.partner",
+            method: "unlink",
+            args: [[Number(id)]],
+            kwargs: {},
+          },
+        },
+        { withCredentials: true }
+      );
+      Alert.alert("Success", "Customer deleted");
+      fetchCustomers(url);
+      router.back();
+
+    } catch (error) {
+      console.log("Error deleting customer:", error);
+    }
+  };
+
+  // handle delete 
+  const handleDelete = () => {
+    Alert.alert(
+      "Delete Customer",
+      "Are you sure you want to delete this customer?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => deleteCustomer(),
+        },
+      ]
+    );
   };
 
   if (loading) {
@@ -294,7 +341,7 @@ export default function CustomerDetails() {
             {/* Delete Button */}
             <TouchableOpacity
               className="flex-1 bg-red-500 py-3 rounded-lg items-center"
-            // onPress={() => handleDelete()}
+            onPress={() => handleDelete()}
             >
               <Text className="text-white font-semibold">Delete</Text>
             </TouchableOpacity>
