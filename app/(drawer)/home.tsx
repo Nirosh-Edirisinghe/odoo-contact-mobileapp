@@ -2,12 +2,15 @@ import { View, Text, TouchableOpacity, FlatList, Image, } from "react-native";
 import { useLocalSearchParams, router, Stack } from "expo-router";
 import { useCustomers } from "@/src/context/CustomerContext";
 import { useEffect } from "react";
-import LogoutButton from "@/src/components/LogoutButton";
 import HomeTopBar from "@/src/components/HomeTopBar";
+import { useAuth } from "@/src/context/AuthContext";
 
 export default function Home() {
-  const { url, db, uid } = useLocalSearchParams();
+
   const { customers, fetchCustomers } = useCustomers();
+  const { user } = useAuth();
+  const url = user?.url;
+  
 
   useEffect(() => {
     fetchCustomers(String(url));
@@ -27,7 +30,6 @@ export default function Home() {
           <Text className="text-3xl font-bold text-gray-700">
             Dashboard
           </Text>
-          <LogoutButton />
         </View>
 
         <View className="bg-odoo-light p-6 rounded-2xl mb-6">
@@ -47,14 +49,7 @@ export default function Home() {
 
           <TouchableOpacity
             onPress={() =>
-              router.push({
-                pathname: "/customers",
-                params: {
-                  url: String(url),
-                  db: String(db),
-                  uid: String(uid),
-                },
-              })
+              router.push("/customers")
             }
           >
             <Text className="text-blue-500 font-bold">
@@ -69,7 +64,14 @@ export default function Home() {
             item.id.toString()
           }
           renderItem={({ item }) => (
-            <View className="bg-gray-100 p-4 rounded-xl mb-3 flex-row items-center justify-between">
+            <TouchableOpacity
+              onPress={() =>
+                router.push({
+                  pathname: "/customer/[id]",
+                  params: { id: item.id },
+                })
+              }
+              className="bg-gray-100 p-4 rounded-xl mb-3 flex-row items-center justify-between">
 
               {/* name section */}
               <View>
@@ -93,7 +95,7 @@ export default function Home() {
               ) : (
                 <View className="w-12 h-12 bg-gray-300 rounded-full" />
               )}
-            </View>
+            </TouchableOpacity>
           )}
         />
       </View>

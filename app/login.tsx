@@ -10,12 +10,13 @@ import {
 import axios from "axios";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAuth } from "@/src/context/AuthContext";
 
 export default function Login() {
+
   const { url, databases } = useLocalSearchParams();
-
   const dbList = JSON.parse(databases as string);
-
+  const { login } = useAuth();
   const [selectedDb, setSelectedDb] = useState(dbList[0] || "");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -40,24 +41,17 @@ export default function Login() {
       const uid = response.data.result.uid;
 
       if (uid) {
-        await AsyncStorage.setItem(
-          "user",
-          JSON.stringify({
-            uid,
-            url,
-            db: selectedDb,
-          })
-        );
-        Alert.alert("Success", "Login successful");
+        const userData = {
+          uid: String(uid),
+          url: String(url),
+          db: String(selectedDb),
+        };
+        
+        await login(userData);
 
-        router.push({
-          pathname: "/home",
-          params: {
-            url,
-            db: selectedDb,
-            uid,
-          },
-        });
+        Alert.alert("Success", "Login successful");
+        router.replace("/(drawer)/home");
+
       } else {
         Alert.alert("Error", "Invalid credentials");
       }
@@ -89,7 +83,7 @@ export default function Login() {
           >
             <Text
               className={`font-bold ${selectedDb === db
-                ? "text-white"
+                ? "text-black"
                 : "text-black"
                 }`}
             >

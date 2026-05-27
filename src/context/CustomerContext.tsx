@@ -6,14 +6,17 @@ import {
 } from "react";
 
 import axios from "axios";
+import { useAuth } from "./AuthContext";
 
 const CustomerContext = createContext<any>(null);
 
 export const CustomerProvider = ({
   children,
 }: any) => {
+  type Tag = { id: number; name: string };
   const [customers, setCustomers] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [tags, setTags] = useState<Tag[]>([]);
 
   const fetchCustomers = async (
     url: string
@@ -44,16 +47,41 @@ export const CustomerProvider = ({
 
       setCustomers(response.data.result);
     } catch (error) {
-      console.log(error);
+      console.log("Error fetching custormers ini", error);
     } finally {
       setLoading(false);
     }
   };
 
+  const fetchTags = async (url: string) => {
+    try {
+      const response = await axios.post(
+        `${url}/web/dataset/call_kw/res.partner.category/search_read`,
+        {
+          jsonrpc: "2.0",
+          params: {
+            model: "res.partner.category",
+            method: "search_read",
+            args: [],
+            kwargs: {
+              fields: ["id", "name"],
+            },
+          },
+        }
+      );
+
+      setTags(response.data.result);
+    } catch (error) {
+      console.log("Error fetching tags", error);
+    }
+  };
+
   const value = {
     customers,
-        loading,
-        fetchCustomers,
+    loading,
+    fetchCustomers,
+    tags,
+    fetchTags
   }
 
   return (

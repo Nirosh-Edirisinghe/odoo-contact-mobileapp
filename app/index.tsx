@@ -3,10 +3,12 @@ import { View, Text, TextInput, TouchableOpacity, Alert, } from "react-native";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router, Stack } from "expo-router";
+import { useAuth } from "@/src/context/AuthContext";
 
 export default function Index() {
 
-  const [url, setUrl] = useState("http://10.215.149.113:8069");
+  const [url, setUrl] = useState("http://10.247.196.113:8069");
+  const { user, loading } = useAuth();
 
   const connectToOdoo = async () => {
     try {
@@ -26,25 +28,18 @@ export default function Index() {
         },
       });
     } catch (error) {
-      console.log(error);
+      console.log('Cannot connect to Odoo server',error);
       Alert.alert("Error", "Cannot connect to Odoo server");
     }
   };
 
   useEffect(() => {
-    const checkUser = async () => {
-      const user = await AsyncStorage.getItem("user");
-
+    if (!loading) {
       if (user) {
-        const parsed = JSON.parse(user);
-        router.replace({
-          pathname: "/home",
-          params: parsed,
-        });
+        router.replace("/(drawer)/home");
       }
-    };
-    checkUser();
-  }, []);
+    }
+  }, [user, loading]);
 
   return (
     <>

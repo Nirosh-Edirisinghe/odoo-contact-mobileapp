@@ -1,17 +1,10 @@
 import { TouchableOpacity, Text } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
+import { useAuth } from "../context/AuthContext";
 
 export default function LogoutButton() {
-  const logout = async () => {
-    try {
-      await AsyncStorage.removeItem("user");
-
-      router.replace("/");
-    } catch (error) {
-      console.log("Logout error:", error);
-    }
-  };
+  const {logout} = useAuth()
 
   return (
     <TouchableOpacity

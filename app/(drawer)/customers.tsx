@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
-import {View,Text,FlatList,TouchableOpacity,Alert,Image,} from "react-native";
+import { View, Text, FlatList, TouchableOpacity, Alert, Image, } from "react-native";
 import { router, Stack, useLocalSearchParams } from "expo-router";
 import { useCustomers } from "@/src/context/CustomerContext";
 import CustomerModal from "@/src/components/CustomerModal";
+import { useAuth } from "@/src/context/AuthContext";
+import { useRouter } from "expo-router";
 
 export default function Customers() {
 
-  const { url, db, uid } = useLocalSearchParams();
-  console.log("custoremrs", url);
+  const { user } = useAuth();
   const { customers, fetchCustomers } = useCustomers();
   const [modalVisible, setModalVisible] = useState(false);
+  const url = user?.url;
+  const router = useRouter()
 
   return (
     <>
@@ -26,6 +29,7 @@ export default function Customers() {
           </Text>
 
           <TouchableOpacity
+            // onPress={() => router.push("/addCustormer")}
             onPress={() => setModalVisible(true)}
             className="bg-odoo-light p-4 rounded-xl"
           >
@@ -39,7 +43,14 @@ export default function Customers() {
           data={customers}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <View className="bg-gray-100 p-4 rounded-xl mb-3 flex-row items-center justify-between">
+
+            <TouchableOpacity
+              onPress={() =>
+                router.push({
+                  pathname: "/customer/[id]",
+                  params: { id: item.id },
+                })
+              } className="bg-gray-100 p-4 rounded-xl mb-3 flex-row items-center justify-between">
 
               {/* text section */}
               <View >
@@ -61,7 +72,7 @@ export default function Customers() {
               ) : (
                 <View className="w-12 h-12 bg-gray-300 rounded-full" />
               )}
-            </View>
+            </TouchableOpacity>
           )}
         />
         <CustomerModal
