@@ -6,11 +6,11 @@ import HomeTopBar from "@/src/components/HomeTopBar";
 import { useAuth } from "@/src/context/AuthContext";
 
 export default function Home() {
-  
+
   const { customers, fetchCustomers } = useCustomers();
   const { user } = useAuth();
   const url = user?.url;
-  
+
   useEffect(() => {
     fetchCustomers(String(url));
   }, []);
@@ -63,7 +63,14 @@ export default function Home() {
             item.id.toString()
           }
           renderItem={({ item }) => (
-            <View className="bg-gray-100 p-4 rounded-xl mb-3 flex-row items-center justify-between">
+            <TouchableOpacity
+              onPress={() =>
+                router.push({
+                  pathname: "/customer/[id]",
+                  params: { id: item.id },
+                })
+              }
+              className="bg-gray-100 p-4 rounded-xl mb-3 flex-row items-center justify-between">
 
               {/* name section */}
               <View>
@@ -87,7 +94,7 @@ export default function Home() {
               ) : (
                 <View className="w-12 h-12 bg-gray-300 rounded-full" />
               )}
-            </View>
+            </TouchableOpacity>
           )}
         />
       </View>
