@@ -74,7 +74,7 @@ export default function CustomerDetails() {
 
       const data = response.data.result[0];
       setCustomer(data);
-
+      
     } catch (error) {
       console.log("Error fetching customer:", error);
     } finally {

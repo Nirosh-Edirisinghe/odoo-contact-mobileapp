@@ -14,6 +14,7 @@ export const CustomerProvider = ({
   children,
 }: any) => {
   type Tag = { id: number; name: string };
+  
   const [customers, setCustomers] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [tags, setTags] = useState<Tag[]>([]);
@@ -37,7 +38,8 @@ export const CustomerProvider = ({
                 "name",
                 "email",
                 "phone",
-                "image_1920"
+                "image_1920",
+                "company_type",
               ],
               limit: 100,
             },
