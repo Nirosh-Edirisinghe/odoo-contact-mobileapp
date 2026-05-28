@@ -7,6 +7,8 @@ import ComanyPickerModal from "./ComanyPickerModal";
 import StatePickerModal from "./StatePickerModal";
 import TitlePickerModal from "./TitlePickerModal";
 import TagPickerModal from "./TagPickerModal";
+import { useMasterData } from "../context/MasterDataContext";
+import { Country, Company, State, Title, Tag } from "../services/masterDataTypes";
 
 export default function CustomerModal({ visible, onClose, url, refreshCustomers }: any) {
 
@@ -23,29 +25,28 @@ export default function CustomerModal({ visible, onClose, url, refreshCustomers 
   const [email, setEmail] = useState("");
   const [website, setWebSite] = useState("");
 
-  type Country = { id: number; name: string };
-  type Company = { id: number; name: string; };
-  type State = { id: number; name: string; country_id: [number, string]; };
-  type Title = { id: number; name: string; };
-  type Tag = { id: number; name: string; };
+  const {
+    countries,
+    companies,
+    states,
+    titles,
+    tags,
+    loadStates,
+  } = useMasterData();
+  
 
-  const [countries, setCountries] = useState<Country[]>([]);
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
   const [countryPickerVisible, setCountryPickerVisible] = useState(false);
 
-  const [companies, setCompanies] = useState<Company[]>([]);
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
   const [comanyPickerVisible, setComanyPickerVisible] = useState(false);
 
-  const [states, setStates] = useState<State[]>([]);
   const [selectedState, setSelectedState] = useState<State | null>(null);
   const [statePickerVisible, setStatePickerVisible] = useState(false);
 
-  const [titles, setTitles] = useState<Title[]>([]);
   const [selectedTitle, setSelectedTitle] = useState<Title | null>(null);
   const [titlePickerVisible, setTitlePickerVisible] = useState(false);
 
-  const [tags, setTags] = useState<Tag[]>([]);
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
   const [tagPickerVisible, setTagPickerVisible] = useState(false);
 
@@ -67,52 +68,6 @@ export default function CustomerModal({ visible, onClose, url, refreshCustomers 
     setSelectedTags([]);
     setSelectedTitle(null);
 
-  };
-
-  const fetchCountries = async () => {
-    try {
-      const res = await axios.post(
-        `${url}/web/dataset/call_kw/res.country/search_read`,
-        {
-          jsonrpc: "2.0",
-          params: {
-            model: "res.country",
-            method: "search_read",
-            args: [[]],
-            kwargs: { fields: ["id", "name"] },
-          },
-        },
-        { withCredentials: true }
-      );
-      setCountries(res.data.result);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const fetchCompanies = async () => {
-    try {
-      const res = await axios.post(
-        `${url}/web/dataset/call_kw/res.partner/search_read`,
-        {
-          jsonrpc: "2.0",
-          params: {
-            model: "res.partner",
-            method: "search_read",
-            args: [
-              [["company_type", "=", "company"]]  // 🔥 IMPORTANT FILTER
-            ],
-            kwargs: {
-              fields: ["id", "name"],
-            },
-          },
-        },
-        { withCredentials: true }
-      );
-      setCompanies(res.data.result);
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   const fetchCompanyDetails = async (companyId: number) => {
@@ -139,10 +94,8 @@ export default function CustomerModal({ visible, onClose, url, refreshCustomers 
           },
         }
       );
-
       const company = response.data.result[0];
       console.log(company);
-
 
       // ✅ Auto-fill fields
       setStreet(company.street || "");
@@ -170,81 +123,6 @@ export default function CustomerModal({ visible, onClose, url, refreshCustomers 
       setVat(company.vat || "");
     } catch (error) {
       console.log("Error fetching company details:", error);
-    }
-  };
-
-  const fetchStates = async (countryId?: number) => {
-    const domain = countryId
-      ? [[["country_id", "=", countryId]]]
-      : [[]];
-    try {
-      const res = await axios.post(
-        `${url}/web/dataset/call_kw/res.country.state/search_read`,
-        {
-          jsonrpc: "2.0",
-          params: {
-            model: "res.country.state",
-            method: "search_read",
-            args: domain,
-            kwargs: {
-              fields: ["id", "name", "country_id"],
-            },
-          },
-        },
-        { withCredentials: true }
-      );
-
-      setStates(res.data.result);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const fetchTitles = async () => {
-    try {
-      const res = await axios.post(
-        `${url}/web/dataset/call_kw/res.partner.title/search_read`,
-        {
-          jsonrpc: "2.0",
-          params: {
-            model: "res.partner.title",
-            method: "search_read",
-            args: [[]],
-            kwargs: {
-              fields: ["id", "name"],
-            },
-          },
-        },
-        { withCredentials: true }
-      );
-
-      setTitles(res.data.result);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const fetchTags = async () => {
-    try {
-      const res = await axios.post(
-        `${url}/web/dataset/call_kw/res.partner.category/search_read`,
-        {
-          jsonrpc: "2.0",
-          params: {
-            model: "res.partner.category",
-            method: "search_read",
-            args: [[]],
-            kwargs: {
-              fields: ["id", "name"],
-            },
-          },
-        },
-        { withCredentials: true }
-      );
-
-      setTags(res.data.result);
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -318,14 +196,13 @@ export default function CustomerModal({ visible, onClose, url, refreshCustomers 
   };
 
   useEffect(() => {
-    if (visible) {
-      fetchCompanies();
-      fetchStates();
-      fetchCountries();
-      fetchTitles();
-      fetchTags();
+    if (selectedCountry) {
+      loadStates(selectedCountry.id);
     }
-  }, [visible]);
+  }, [selectedCountry]);
+
+  
+
 
   return (
     <>
@@ -503,7 +380,7 @@ export default function CustomerModal({ visible, onClose, url, refreshCustomers 
               <TouchableOpacity
                 onPress={() => {
                   onClose(),
-                  clearForm()
+                    clearForm()
                 }}
                 className="items-center bg-gray-100 rounded-2xl py-3.5">
                 <Text className="text-gray-500 font-semibold text-base">Cancel</Text>
@@ -526,7 +403,6 @@ export default function CustomerModal({ visible, onClose, url, refreshCustomers 
           setSelectedState(null);
 
           // ✅ FETCH NEW STATES
-          fetchStates(country.id);
         }}
         onClose={() => setCountryPickerVisible(false)}
       />
