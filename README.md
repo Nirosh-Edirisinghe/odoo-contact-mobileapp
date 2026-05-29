@@ -1,50 +1,134 @@
-# Welcome to your Expo app 👋
+# 📱 Odoo Mobile App (React Native)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## 🚀 Project Overview
 
-## Get started
+This mobile application is developed using **React Native (Expo)** and integrates with the **Odoo API (JSON-RPC)** to manage customer data efficiently.
 
-1. Install dependencies
+The app allows users to perform full **CRUD operations (Create, Read, Update, Delete)** on customers through a user-friendly mobile interface.
 
-   ```bash
-   npm install
-   ```
+---
 
-2. Start the app
+## 🧩 Features
 
-   ```bash
-   npx expo start
-   ```
+### 🔐 Authentication
 
-In the output, you'll find options to open the app in a
+* Connect to Odoo server
+* User login with credentials
+* Secure session handling
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### 📊 Dashboard
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+* Display total number of customers
+* Show recent customers in card format
 
-## Get a fresh project
+### 👥 Customer Management
 
-When you're ready, run:
+* View all customers
+* Search customers
+* Filter customer list
+* View detailed customer information
+
+### ➕ CRUD Operations
+
+* Create new customer
+* Update existing customer
+* Delete customer
+
+### 🧭 Navigation
+
+* Drawer navigation (Dashboard & Customers)
+* Smooth and responsive mobile UI/UX
+
+### 🚪 Logout
+
+* Secure logout functionality
+
+---
+
+## 🛠️ Tech Stack
+
+* **React Native (Expo)**
+* **Axios** (API calls)
+* **Odoo JSON-RPC API**
+* **React Navigation**
+
+---
+
+## ⚙️ Setup Instructions
+
+### 1. Clone Repository
 
 ```bash
-npm run reset-project
+git clone https://github.com/Nirosh-Edirisinghe/odoo-contact-mobileapp.git
+cd odoo-mobile-app
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 2. Install Dependencies
 
-## Learn more
+```bash
+npm install
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+### 3. Start Application
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+npx expo start
+```
 
-## Join the community
+### 4. Configure Odoo Server
 
-Join our community of developers creating universal apps.
+* Enter your Odoo server URL in the app
+* Provide valid login credentials
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+---
+
+## 🔌 Odoo API Integration
+
+The app communicates with Odoo using **JSON-RPC** endpoints.
+
+### Example API Call
+
+```js
+POST /web/dataset/call_kw/res.partner/search_read
+```
+
+### Operations Implemented
+
+* `search_read` → Fetch customers
+* `create` → Add customer
+* `write` → Update customer
+* `unlink` → Delete customer
+
+---
+
+## 📱 Application Screens
+
+* Server Connection Screen
+* Login Screen
+* Dashboard
+* Customer List
+* Customer Detail View
+* Add / Edit Customer Modal
+
+---
+
+## 📌 Module Used
+
+* **Contacts Module (`res.partner`)**
+
+---
+
+## 👨‍💻 Author
+
+Developed as part of an **Odoo API Integration Mobile App Task** using React Native.
+
+---
+
+## ✅ Project Status
+
+* ✔ Completed CRUD functionality
+* ✔ Fully functional mobile UI
+* ✔ Odoo API successfully integrated
+* ✔ Responsive and user-friendly design
+
+---
