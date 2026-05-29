@@ -5,6 +5,8 @@ import axios from "axios";
 import { useAuth } from "@/src/context/AuthContext";
 import { Ionicons } from "@expo/vector-icons";
 import { useCustomers } from "@/src/context/CustomerContext";
+import UpdateCustormer from "@/src/components/UpdateCustormer";
+import CustomerModal from "@/src/components/CustomerModal";
 
 export default function CustomerDetails() {
   const { id } = useLocalSearchParams();
@@ -14,6 +16,7 @@ export default function CustomerDetails() {
 
   const [customer, setCustomer] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [updateModalVisible, setUpdateModalVisible] = useState(false)
 
   useEffect(() => {
     if (url) {
@@ -74,7 +77,7 @@ export default function CustomerDetails() {
 
       const data = response.data.result[0];
       setCustomer(data);
-      
+
     } catch (error) {
       console.log("Error fetching customer:", error);
     } finally {
@@ -127,6 +130,11 @@ export default function CustomerDetails() {
         },
       ]
     );
+  };
+
+  // handle Update 
+  const handleUpdate = () => {
+    setUpdateModalVisible(true)
   };
 
   if (loading) {
@@ -333,7 +341,7 @@ export default function CustomerDetails() {
             {/* Update Button */}
             <TouchableOpacity
               className="flex-1 bg-odoo-light py-3 rounded-lg items-center"
-            // onPress={() => handleUpdate()}
+              onPress={() => handleUpdate()}
             >
               <Text className="text-white font-semibold">Update</Text>
             </TouchableOpacity>
@@ -341,7 +349,7 @@ export default function CustomerDetails() {
             {/* Delete Button */}
             <TouchableOpacity
               className="flex-1 bg-red-500 py-3 rounded-lg items-center"
-            onPress={() => handleDelete()}
+              onPress={() => handleDelete()}
             >
               <Text className="text-white font-semibold">Delete</Text>
             </TouchableOpacity>
@@ -350,6 +358,14 @@ export default function CustomerDetails() {
 
 
         </View>
+
+        <CustomerModal
+          visible={updateModalVisible}
+          onClose={() => setUpdateModalVisible(false)}
+          url={url}
+          refreshCustomers={fetchCustomer}
+          customer={customer}
+        />
       </View >
     </>
   );
